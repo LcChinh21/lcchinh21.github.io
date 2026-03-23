@@ -13,6 +13,7 @@
 </head>
 <body>
     <div class="page-bg"></div>
+    <div class="falling-leaves" id="fallingLeavesContainer"></div>
 
     <header class="bar">
         <div class="lbar">
@@ -21,11 +22,35 @@
         </div>
         <div class="rbar">
             <p>Share</p>
-            <i class="fa-solid fa-comment"></i>
+            <i class="fa-solid fa-comment" id="chatIcon" title="Leave a message!"></i>
             <i class="fa-solid fa-clock"></i>
             <i class="fa-solid fa-bars"></i>
         </div>
     </header>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>💬 Leave a Message</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="visitorName">Your Name:</label>
+                    <input type="text" id="visitorName" placeholder="Enter your name..." required>
+                </div>
+                <div class="form-group">
+                    <label for="visitorMessage">Your Message:</label>
+                    <textarea id="visitorMessage" placeholder="Share your thoughts..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message ✨</button>
+            </form>
+            
+            <div class="messages-section">
+                <h3>📝 Recent Messages</h3>
+                <div id="messagesList" class="messages-list"></div>
+            </div>
+        </div>
+    </div>
 
     <main class="profile-wrap">
         <section class="hero">
@@ -34,9 +59,16 @@
             </div>
 
             <img class="avatar" src="image/avatar.jpg" alt="Le Duc Chinh avatar">
+            <div id="avatarChatBubble" class="avatar-chat-bubble" aria-live="polite"></div>
+            <div class="feedback-stack-container" id="feedbackStackContainer">
+                <div class="feedback-stack-scroll" id="feedbackStackScroll">
+                    <!-- Feedback cards will be inserted here -->
+                </div>
+            </div>
             <div class="intro-card">
                 <p><strong>Hello there! I'm Le Duc Chinh ✨</strong></p>
                 <p>Welcome to my little corner on the internet.</p>
+                <p class="feedback-hint" onclick="document.getElementById('feedbackModal').classList.add('show')" style="cursor: pointer; color: #e7b985; font-weight: 600; margin-top: 10px; font-size: 12px;">💬 Leave your feedback here!</p>
             </div>
         </section>
 
@@ -53,6 +85,8 @@
                 </div>
                 <div class="code">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" class="logo" alt="C++ logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" class="logo" alt="Python logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" class="logo" alt="C# logo">
                     <img src="image/html.png" class="logo" alt="HTML logo">
                     <img src="image/css.png" class="logo" alt="CSS logo">
                 </div>
@@ -73,6 +107,70 @@
                 </div>
             </div>
         </section>
+
+        <!-- Visitor Comments Section -->
+        <section class="content">
+            <div class="titlebox">
+                <p>📝 Visitor Messages</p>
+            </div>
+            <div id="visitorCommentsContainer" class="visitor-comments-container">
+                <div class="empty-feedback">
+                    <p>No messages yet. Click the 💬 icon at the top to leave one! ✨</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Minigames Section -->
+        <section class="minigames-section">
+            <div class="titlebox">
+                <p>Mini Games 🎮</p>
+            </div>
+
+            <div class="minigames-grid">
+                <!-- Game 1: Click Avatar -->
+                <div class="minigame-card">
+                    <h3>Click Avatar Game</h3>
+                    <div class="game-container">
+                        <div class="click-stat">
+                            <p>Score: <span id="click-score">0</span></p>
+                            <button id="click-reset" class="game-btn">Reset</button>
+                        </div>
+                        <img id="clickable-avatar" src="image/avatar.jpg" alt="Click me!" class="clickable-avatar">
+                        <p id="click-feedback" class="click-feedback"></p>
+                    </div>
+                </div>
+
+                <!-- Game 2: Memory Card Game -->
+                <div class="minigame-card">
+                    <h3>Memory Card Game</h3>
+                    <div class="game-container">
+                        <p>Tries: <span id="memory-tries">0</span>/10</p>
+                        <div class="memory-grid" id="memoryGrid"></div>
+                        <button id="memory-start" class="game-btn">Start Game</button>
+                        <p id="memory-result" class="memory-result"></p>
+                    </div>
+                </div>
+
+                <!-- Game 3: Typing Speed Test -->
+                <div class="minigame-card">
+                    <h3>Typing Speed Test</h3>
+                    <div class="game-container">
+                        <p id="typing-text" class="typing-text">Click "Start" to begin...</p>
+                        <input type="text" id="typing-input" class="typing-input" placeholder="Type here..." disabled>
+                        <div class="typing-stats">
+                            <p>WPM: <span id="typing-wpm">0</span></p>
+                            <p>Accuracy: <span id="typing-accuracy">0</span>%</p>
+                        </div>
+                        <button id="typing-start" class="game-btn">Start</button>
+                        <p id="typing-result" class="typing-result"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <script src="leaves.js"></script>
+    <script src="modal.js"></script>
+    <script src="games.js"></script>
 </body>
 </html>
